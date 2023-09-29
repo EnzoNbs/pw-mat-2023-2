@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cálculo da área de uma elipse</title>
+</head>
+
+<body>
+
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <div id="root"></div>
+
+  <script type="text/babel">
+
+    function Form() {
+
+      const [raioMaior, setMaior] = React.useState()
+      const [raioMenor, setMenor] = React.useState()
+
+      function handleChange1(event) {
+        raioMaior = event.target.value
+      }
+
+      function handleChange2(event) {
+        raioMenor = event.target.value
+      }
+
+      return <>
+        <h1>Cálculo da área de uma elipse</h1>
+        <form>
+          <div>
+            <label>
+              <span>Medida do raio maior:</span><br />
+              <input
+                type="number"
+                onChange={event1 => setMaior(event.target.value)}
+                value={raioMaior} />
+            </label>
+          </div>
+          <div>
+            <label>
+              <span>Medida do raio menor:</span><br />
+              <input
+                type="number"
+                onChange={event => setMenor(event.target.value)}
+                value={raioMenor}
+              />
+            </label>
+          </div>
+          <div>
+            Área: {Number(raioMaior) * Number(raioMenor) * Math.PI}
+          </div>
+        </form>
+      </>
+    }
+
+    const container = <>
+      <Form />
+    </>
+
+    const root = ReactDOM.createRoot(document.getElementById('root'))
+    root.render(container)
+
+  </script>
+
+</body>
+
+</html>
