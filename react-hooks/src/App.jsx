@@ -5,6 +5,7 @@ import Exercicio01 from './exercicios/01'
 import Exercicio02 from './exercicios/02'
 import Exercicio03 from './exercicios/03'
 import Exercicio04 from './exercicios/04'
+import Exercicio05 from './exercicios/05'
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
           <li> <Link to="/02">Exercicio 02</Link></li>
           <li> <Link to="/03">Exercicio 03</Link></li>
           <li> <Link to="/04">Exercicio 04</Link></li>
+          <li> <Link to="/05">Exercicio 05</Link></li>
         </ul>
 
         <hr />
@@ -30,6 +32,7 @@ function App() {
           <Route path="/02" element={<Exercicio02 />}></Route>
           <Route path="/03" element={<Exercicio03 />}></Route>
           <Route path="/04" element={<Exercicio04 />}></Route>
+          <Route path="/05" element={<Exercicio05 />}></Route>
           
         </Routes>
         </div>

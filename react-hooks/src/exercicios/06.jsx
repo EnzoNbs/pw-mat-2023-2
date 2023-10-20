@@ -1,55 +1,70 @@
 import * as React from 'react'
-// 🐨 você vai precisar dos seguintes itens de '../pokemon':
-// fetchPokemon: a função que retorna as informações do pokémon
-// PokemonInfoFallback: o que é exibido enquanto as informações do pokémon
-// são carregadas
-// PokemonDataView: o componente usado para exibir as informações do pokémon
-import {PokemonForm} from '../pokemon'
+import VanillaTilt from 'vanilla-tilt'
 
-function PokemonInfo({pokemonName}) {
-  // 🐨 crie o estado para o pokémon (null)
+function Tilt({children}) {
+  // 🐨 crie uma ref aqui usando React.useRef()
+  const tiltRef = React.useRef()
 
-  // 🐨 crie React.useEffect de modo a ser chamado sempre que pokemonName mudar.
-  // 💰 NÃO SE ESQUEÇA DO VETOR DE DEPENDÊNCIAS!
+  // Quando o componente for carregado ("montado"), fazemos
+  // a associação entre a biblioteca vanilla-tilt e a div
+  // identificada pela ref criada. O vetor de dependências fica
+  // vazio exatamente para indicar que esse useEffect deve ser
+  // executado apenas na montagem do componente
+  React.useEffect(() => {
+    const tiltNode = tiltRef.current
+    VanillaTilt.init(tiltNode, {
+      max: 25,
+      speed: 400,
+      glare: true,
+      'max-glare': 0.5,
+    })
 
-  // 💰 se pokemonName é falso (ou uma string vazia) não se preocupe em fazer 
-  // a requisição (retorne precocemente).
+    // Essa função retornada pelo useEffect() será executada
+    // quando o componente for descarregado da memória
+    // (fase "unmount")
+    return () => {
+      tiltNode.vanillaTilt.destroy()
+      alert('Destruído!')
+    }
+  }, [])
 
-  // 🐨 antes de chamar `fetchPokemon`, limpe o estado atual do pokemon
-  // ajustando-o para null.
+  // 🐨 adicione uma função `React.useEffect` aqui e use VanillaTilt para
+  // fazer sua div parecer fantástica.
+  // 💰 assim:
+  // const tiltNode = tiltRef.current
+  // VanillaTilt.init(tiltNode, {
+  //   max: 25,
+  //   speed: 400,
+  //   glare: true,
+  //   'max-glare': 0.5,
+  // })
+  
+  // 💰 Não se esqueça de retornar uma função de limpeza. VanillaTilt.init 
+  // vai adicionar um objeto ao seu DOM, precisando ser eliminado:
+  // `return () => tiltNode.vanillaTilt.destroy()`
+  
+  // 💰 Não se esqueça de especificar seu vetor de dependências! No nosso
+  // caso, samemos que o nodo do tilt nunca muda, então ajuste o vetor para `[]`.
 
-  // (Isso é para habilitar o estado de carregamento ao alternar entre diferentes
-  // pokémon.)
-  // 💰 Use a função `fetchPokemon` para buscar um pokémon pelo seu nome:
-  //   fetchPokemon('Pikachu').then(
-  //     pokemonData => {/* atualize todos os estados aqui */},
-  //   )
-  // 🐨 return the following things based on the `pokemon` state and `pokemonName` prop:
-  // 🐨 retorne o seguinte baseado nos estados `pokemon` e `pokemonName`:
-  //   1. não há pokemonName: 'Informe um pokémon'
-  //   2. tem pokemonName mas não pokemon: <PokemonInfoFallback name={pokemonName} />
-  //   3. tem pokemon: <PokemonDataView pokemon={pokemon} />
-
-  // 💣 remova isso
-  return 'TODO'
-}
-
-function Exercicio06() {
-  const [pokemonName, setPokemonName] = React.useState('')
-
-  function handleSubmit(newPokemonName) {
-    setPokemonName(newPokemonName)
-  }
-
+  // 🐨 adicione a prop `ref` à div `tilt-root` aqui:
   return (
-    <div className="pokemon-info-app">
-      <PokemonForm pokemonName={pokemonName} onSubmit={handleSubmit} />
-      <hr />
-      <div className="pokemon-info">
-        <PokemonInfo pokemonName={pokemonName} />
-      </div>
+    <div className="tilt-root" ref={tiltRef}>
+      <div className="tilt-child">{children}</div>
     </div>
   )
 }
 
-export default Exercicio06
+function Exercicio05() {
+  return (
+    <>
+      <Tilt>
+        <div className="totally-centered">vanilla-tilt.js</div>
+      </Tilt>
+      <Tilt>
+        <div className="totally-centered">vanilla-tilt.js</div>
+      </Tilt>
+    </>
+  )
+}
+
+export default Exercicio05
